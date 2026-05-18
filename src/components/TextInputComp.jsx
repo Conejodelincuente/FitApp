@@ -1,14 +1,10 @@
-import {
-  TextInput,
-  Text,
-  View,
-} from 'react-native';
+import { TextInput, Text, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { inputStyles } from '../styles/components/inputStyles.js';
-import { spacing } from '../styles/constants/index.js';
+import { spacing, colors } from '../styles/constants';
 import { useState } from 'react';
 
-function TextImputComp({
+function TextInputComp({
   label,
   onChangeText,
   value,
@@ -17,8 +13,7 @@ function TextImputComp({
   secureTextEntry = false,
   error,
 }) {
-  const [isFocused, setIsFocused] =
-    useState(false);
+  const [isFocused, setIsFocused] = useState(false);
 
   return (
     <View style={inputStyles.maincontainer}>
@@ -29,23 +24,18 @@ function TextImputComp({
           size={20}
           color={colors.textSecondary}
         />
-        <Text style={inputStyles.label}>
-          {label}
-        </Text>
+        <Text style={inputStyles.label}>{label}</Text>
       </View>
       <View
         style={[
           inputStyles.inputContainer,
-          isFocused &&
-            inputStyles.inputContainerFocus,
+          isFocused && inputStyles.inputContainerFocus,
         ]}
       >
         <TextInput
           style={inputStyles.inputText}
           placeholder={placeholder}
-          placeholderTextColor={
-            inputStyles.inputText.color
-          }
+          placeholderTextColor={inputStyles.disableText.color}
           value={value}
           onChangeText={onChangeText}
           onFocus={() => setIsFocused(true)}
@@ -53,12 +43,10 @@ function TextImputComp({
         />
       </View>
       {error && (
-        <Text style={inputStyles.error}>
-          {error}
-        </Text>
+        <Text style={inputStyles.error}>{error}</Text>
       )}
     </View>
   );
 }
 
-export default TextImputComp;
+export default TextInputComp;

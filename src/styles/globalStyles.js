@@ -1,11 +1,9 @@
 import { StyleSheet } from 'react-native';
-import { spacing } from './constants/index.js';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { spacing } from './constants';
 
 export const globalStyles = StyleSheet.create({
   containerMain : {
     flex: 1,
-    justifyContent: 'center',
     padding: spacing.sm
   },
   containerRow : {

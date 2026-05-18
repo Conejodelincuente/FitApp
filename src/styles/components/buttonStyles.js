@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-import { spacing, colors, typography } from './constants/index.js';
+import { spacing, colors, typography } from '../constants';
 
 export const buttonStyles = StyleSheet.create({
   primary: {

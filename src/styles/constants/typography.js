@@ -19,6 +19,12 @@ export const typography = {
     lineHeight: 28,
     fontFamily,
   },
+  h4: {
+    fontSize: 16,
+    fontWeight: '400',
+    lineHeight: 26,
+    fontFamily,
+  },
   body: {
     fontSize: 16,
     fontWeight: '400',
@@ -27,7 +33,7 @@ export const typography = {
   },
   caption: {
     fontSize: 12,
-    fontWeight: '400',
+    fontWeight: '200',
     lineHeight: 16,
     fontFamily,
   },

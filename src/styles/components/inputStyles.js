@@ -20,7 +20,10 @@ export const inputStyles = StyleSheet.create({
     flex:1,
     paddingVertical: spacing.sm,
     fontSize: typography.body.fontSize,
-    color: colors.textPrimary,
+    color: colors.textAlternaty,
+  },
+  disableText:{
+    color: colors.textDisabled
   },
   labelContainer: {
     flexDirection: 'row',
@@ -29,7 +32,7 @@ export const inputStyles = StyleSheet.create({
   label: {
     fontSize: typography.caption.fontSize,
     fontWeight: typography.caption.fontWeight,
-    color: colors.textPrimary,
+    color: colors.textAlternaty,
     marginBottom: spacing.sm,
   },
   icon: {

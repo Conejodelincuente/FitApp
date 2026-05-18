@@ -1,18 +1,18 @@
 export const colors = {
   // Primarios
-  primary: '#FF6B35',
+  primary: '#e66653',
 
 
   //background
   background: '#0f0f0f',
-  bgCanvasDark: '#0B0F14',
-  bgCanvasLight: '#FAFAFA',
   surface: '#222222',
   surfaceSecondary: '#dbdbdb',
+  surfaceTinted: '#f8cece',
+  surfaceTrans:'#dbdbdb34',
 
   // Texto
-  textPrimary: '#ffffff',
-  textAlternaty: '#1a1a1a',
+  textPrimary: '#151515',
+  textAlternative: '#f4f4f4',
   textSecondary: '#a0a0a0',
   textDisabled: '#5a5a5a',
 
