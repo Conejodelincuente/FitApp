@@ -1,13 +1,15 @@
 import { TouchableOpacity, Text } from 'react-native'
+import { Ionicons } from '@expo/vector-icons';
 import { buttonStyles } from '../styles/components/buttonStyles'
 
-function Button( {label, variant='primary', onPress }) {
+function Button( {label, variant='primary', onPress, iconName = null, color }) {
   return (
     <TouchableOpacity
         style={buttonStyles[variant]}
         onPress={onPress}
         >
-      <Text style={buttonStyles[`${variant}Text`]}>{label}</Text>
+      {iconName && <Ionicons name={iconName} size={24} color={color} />}
+      {label && <Text style={buttonStyles[`${variant}Text`]}>{label}</Text>}
     </TouchableOpacity>
   );
 }
