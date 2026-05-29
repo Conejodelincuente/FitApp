@@ -4,17 +4,16 @@ export const colors = {
 
 
   //background
-  background: '#0f0f0f',
+  backgroundLigth: '#f0f0f0',
+  backgroundDark: '#0f0f0f',
   surface: '#222222',
   surfaceSecondary: '#dbdbdb',
-  surfaceTinted: '#f8cece',
   surfaceTrans:'#dbdbdb34',
 
   // Texto
   textPrimary: '#151515',
   textAlternative: '#f4f4f4',
-  textSecondary: '#a0a0a0',
-  textDisabled: '#5a5a5a',
+  textDisabled: '#a0a0a0',
 
   // Estados
   success: '#10b981',

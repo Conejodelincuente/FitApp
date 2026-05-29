@@ -33,14 +33,14 @@ export const typography = {
   },
   caption: {
     fontSize: 12,
-    fontWeight: '200',
+    fontWeight: '400',
     lineHeight: 16,
     fontFamily,
   },
   button: {
-    fontSize: 14,
-    fontWeight: '400',
-    lineHeight: 16,
+    fontSize: 16,
+    fontWeight: '700',
+    lineHeight: 18,
     fontFamily,
   },
 };

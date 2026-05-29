@@ -1,3 +1,4 @@
+import firebaseConfig from './firebaseConfig';
 import { AuthProvider } from './src/context/AuthContext.js';
 import  RootNavigator  from './src/navigation/RootNavigator.js';
 
