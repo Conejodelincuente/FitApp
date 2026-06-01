@@ -11,7 +11,7 @@ export const reservationPreviewStyles = StyleSheet.create({
     gap: spacing.mm,
     margin: spacing.xxs,
     paddingHorizontal: spacing.mm,
-    borderRadius: 12,
+    borderRadius: 8,
   },
   textPrimary: {
     fontSize: typography.h4.fontSize,

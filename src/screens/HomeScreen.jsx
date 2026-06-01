@@ -1,12 +1,9 @@
-import {
-  View,
-  Text,
-  FlatList,
-} from 'react-native';
+import { View, Text, FlatList } from 'react-native';
 import {
   Header,
   CardHeaderComp,
   ReservationPreviewComp,
+  SectionTitleLinkComp,
 } from '../components/index';
 import { classes } from '../data/mockClasses';
 import { globalStyles } from '../styles/globalStyles';
@@ -18,13 +15,15 @@ function HomeScreen() {
       <View style={globalStyles.containerMain}>
         <Header name="Inicio" />
         <CardHeaderComp />
-        <FlatList
-          data={classes.slice(0, 4)}
-          renderItem={({ item }) => (
-            <ReservationPreviewComp classData={item} />
-          )}
-          keyExtractor={(item) => item.id.toString()}
-        />
+        <SectionTitleLinkComp title={'Mis reservas'} linkText={'Ver todas'}>
+          <FlatList
+            data={classes.slice(0, 4)}
+            renderItem={({ item }) => (
+              <ReservationPreviewComp classData={item} />
+            )}
+            keyExtractor={(item) => item.id.toString()}
+          />
+        </SectionTitleLinkComp>
       </View>
     </SafeAreaView>
   );

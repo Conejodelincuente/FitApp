@@ -1,10 +1,11 @@
 import { StyleSheet } from 'react-native';
-import { spacing } from './constants';
+import { spacing, colors } from './constants';
 
 export const globalStyles = StyleSheet.create({
   containerMain : {
     flex: 1,
-    padding: spacing.sm
+    padding: spacing.sm,
+    alignItems: 'center',
   },
   containerRow : {
     flex: 1,
@@ -12,5 +13,12 @@ export const globalStyles = StyleSheet.create({
     justifyContent: 'center',
     padding: spacing.sm
   },
-
+  containerGeneral : {
+    padding: spacing.mm,
+    margin: spacing.mm,
+  },
+  safeAreaContainer :{
+    flex: 1,
+    backgroundColor: colors.backgroundDark
+  },
 });

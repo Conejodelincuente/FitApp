@@ -25,15 +25,19 @@ export const inputStyles = StyleSheet.create({
   disableText:{
     color: colors.textDisabled
   },
+  errorText:{
+    color: colors.error
+  },
   labelContainer: {
     flexDirection: 'row',
     alignItems: 'center',
+    marginBottom: spacing.xs,
   },
   label: {
     fontSize: typography.caption.fontSize,
     fontWeight: typography.caption.fontWeight,
     color: colors.textAlternaty,
-    marginBottom: spacing.sm,
+
   },
   icon: {
       marginRight: spacing.sm,

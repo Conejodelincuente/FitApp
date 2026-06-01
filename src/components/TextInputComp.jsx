@@ -43,7 +43,7 @@ function TextInputComp({
         />
       </View>
       {error && (
-        <Text style={inputStyles.error}>{error}</Text>
+        <Text style={inputStyles.errorText}>{error}</Text>
       )}
     </View>
   );

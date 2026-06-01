@@ -9,7 +9,7 @@ export const HeaderStyles = StyleSheet.create({
     height:64,
     paddingLeft:spacing.md,
     paddingRight:spacing.md,
-    backgroundColor: colors.background,
+    backgroundColor: colors.surface,
   },
   titleContainer:{
     flex:2,

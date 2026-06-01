@@ -3,20 +3,23 @@ import { useContext, useState } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { AuthContext } from '../context/AuthContext';
 import { Button, TextInputComp } from '../components';
+import { signInWithEmailAndPassword } from 'firebase/auth';
+import { auth } from '../../firebaseConfig';
 import {
   typography,
   colors,
   spacing,
 } from '../styles/constants';
 import { buttonStyles } from '../styles/components/buttonStyles';
+import { globalStyles } from '../styles/globalStyles';
 
-function LoginScreen() {
+function LoginScreen({navigation}) {
   const { setIsLogin, setEmail } = useContext(AuthContext);
   const [email, setEmailLocal] = useState('');
   const [password, setPasswordLocal] = useState('');
   const [errors, setErrors] = useState({});
 
-  const handleLogin = () => {
+  const handleLogin = async () => {
     const newErrors = {};
     if (!email.includes('@')) {
       newErrors.email = 'falta "@", Email no valido.';
@@ -29,9 +32,32 @@ function LoginScreen() {
       setErrors(newErrors);
       return;
     }
-    setEmail(email);
-    setIsLogin(true);
+    try {
+      await signInWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+    } catch (error) {
+      const newErrors = {};
+      switch (error.code) {
+        case 'auth/invalid-credential':
+          newErrors.email =
+            'Credenciales incorrectas (email o contraseña).';
+          break;
+        case 'auth/user-not-found':
+          newErrors.email = 'Este usuario no existe.';
+          break;
+        default:
+          newErrors.email =
+            'Ocurrió un error al intentar entrar.';
+      }
+    }
   };
+
+  const handleGoToRegistration = () => {
+  navigation.navigate('Registration');
+};
 
   return (
     <SafeAreaView>
@@ -72,16 +98,24 @@ function LoginScreen() {
             secureTextEntry={true}
             error={errors.password}
           />
-          <Text
-            style={typography.caption}
-            onPress={() => {}}
+          <View
+            style={[
+              globalStyles.containerRow,
+              { justifyContent: 'space-between' },
+            ]}
           >
-            ¿Olvidste tu contraseña?
-          </Text>
-          <Button
-            label={'Entrar'}
-            onPress={handleLogin}
-          />
+            <Button
+              label={'Registrarse'}
+              variant="simple"
+              onPress={handleGoToRegistration}
+              text="primary"
+            />
+            <Button
+              label={'Entrar'}
+              onPress={handleLogin}
+              text="alternative"
+            />
+          </View>
         </View>
       </ScrollView>
     </SafeAreaView>
