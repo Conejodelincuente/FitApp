@@ -87,6 +87,8 @@ function RegistrationScreen({ navigation }) {
         return;
       }
 
+      await authService.logout();
+
       Alert.alert(
         '¡Bienvenido!',
         'Registro completado. Ahora inicia sesión.',

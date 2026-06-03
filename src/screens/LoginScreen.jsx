@@ -5,16 +5,13 @@ import { AuthContext } from '../context/AuthContext';
 import { Button, TextInputComp } from '../components';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../../firebaseConfig';
-import {
-  typography,
-  colors,
-  spacing,
-} from '../styles/constants';
+import { typography, colors, spacing } from '../styles/constants';
 import { buttonStyles } from '../styles/components/buttonStyles';
 import { globalStyles } from '../styles/globalStyles';
 
-function LoginScreen({navigation}) {
-  const { setIsLogin, setEmail } = useContext(AuthContext);
+function LoginScreen({ navigation }) {
+  const { loading } = useContext(AuthContext);
+
   const [email, setEmailLocal] = useState('');
   const [password, setPasswordLocal] = useState('');
   const [errors, setErrors] = useState({});
@@ -33,93 +30,91 @@ function LoginScreen({navigation}) {
       return;
     }
     try {
-      await signInWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
+      await signInWithEmailAndPassword(auth, email, password);
     } catch (error) {
-      const newErrors = {};
-      switch (error.code) {
-        case 'auth/invalid-credential':
-          newErrors.email =
-            'Credenciales incorrectas (email o contraseña).';
-          break;
-        case 'auth/user-not-found':
-          newErrors.email = 'Este usuario no existe.';
-          break;
-        default:
-          newErrors.email =
-            'Ocurrió un error al intentar entrar.';
+      console.log(error.code);
+      const loginErrors = {};
+      if (
+        error.code === 'auth/invalid-credential' ||
+        error.code === 'auth/wrong-password'
+      ) {
+        loginErrors.email = 'Correo o contraseña incorrectos.';
+      } else if (error.code === 'auth/user-not-found') {
+        loginErrors.email = 'El usuario no existe.';
+      } else {
+        loginErrors.email = 'Error al iniciar sesión.';
       }
+      setErrors(loginErrors);
     }
   };
 
-  const handleGoToRegistration = () => {
-  navigation.navigate('Registration');
-};
 
-  return (
-    <SafeAreaView>
-      <ScrollView>
+const handleGoToRegistration = () => {
+  navigation.navigate('Registration');
+}
+
+return (
+  <SafeAreaView>
+    <ScrollView>
+      <View
+        style={{
+          flex: 1,
+          padding: spacing.md,
+          backgroundColor: colors.backgroundColor,
+        }}
+      >
+        <Text style={typography.h1}>FitApp</Text>
+        <Text style={typography.h3}>
+          Tus centro fitness en tus manos
+        </Text>
+      </View>
+      <View
+        style={{
+          flex: 1,
+          padding: spacing.md,
+          backgroundColor: colors.bgCanvasLight,
+        }}
+      >
+        <TextInputComp
+          label={'Email'}
+          value={email}
+          onChangeText={setEmailLocal}
+          iconName={'mail-outline'}
+          placeholder={'Tu@email.com'}
+          error={errors.email}
+        />
+        <TextInputComp
+          label={'Contraseña'}
+          value={password}
+          onChangeText={setPasswordLocal}
+          iconName={'lock-closed-outline'}
+          placeholder={'Contraseña'}
+          secureTextEntry={true}
+          error={errors.password}
+        />
         <View
-          style={{
-            flex: 1,
-            padding: spacing.md,
-            backgroundColor: colors.backgroundColor,
-          }}
+          style={[
+            globalStyles.containerRow,
+            { justifyContent: 'space-between' },
+          ]}
         >
-          <Text style={typography.h1}>FitApp</Text>
-          <Text style={typography.h3}>
-            Tus centro fitness en tus manos
-          </Text>
-        </View>
-        <View
-          style={{
-            flex: 1,
-            padding: spacing.md,
-            backgroundColor: colors.bgCanvasLight,
-          }}
-        >
-          <TextInputComp
-            label={'Email'}
-            value={email}
-            onChangeText={setEmailLocal}
-            iconName={'mail-outline'}
-            placeholder={'Tu@email.com'}
-            error={errors.email}
+          <Button
+            label={'Registrarse'}
+            variant="simple"
+            onPress={handleGoToRegistration}
+            text="primary"
           />
-          <TextInputComp
-            label={'Contraseña'}
-            value={password}
-            onChangeText={setPasswordLocal}
-            iconName={'lock-closed-outline'}
-            placeholder={'Contraseña'}
-            secureTextEntry={true}
-            error={errors.password}
+          <Button
+            label={'Entrar'}
+            onPress={handleLogin}
+            text="alternative"
           />
-          <View
-            style={[
-              globalStyles.containerRow,
-              { justifyContent: 'space-between' },
-            ]}
-          >
-            <Button
-              label={'Registrarse'}
-              variant="simple"
-              onPress={handleGoToRegistration}
-              text="primary"
-            />
-            <Button
-              label={'Entrar'}
-              onPress={handleLogin}
-              text="alternative"
-            />
-          </View>
         </View>
-      </ScrollView>
-    </SafeAreaView>
-  );
+      </View>
+    </ScrollView>
+  </SafeAreaView>
+);
+
 }
 
 export default LoginScreen;

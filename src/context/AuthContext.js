@@ -19,6 +19,7 @@ export function AuthProvider({ children }) {
   // Escuchar cambios de autenticación
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
+      console.log('onAuthStateChanged fired:', firebaseUser?.uid);
       if (firebaseUser) {
         setUser(firebaseUser);
         setIsLogin(true);
@@ -37,9 +38,6 @@ export function AuthProvider({ children }) {
   const logout = async () => {
   try {
     await signOut(auth);
-    // IMPORTANTE: No necesitas setear setIsLogin(false) manualmente aquí.
-    // El useEffect que tiene el onAuthStateChanged se disparará solo
-    // al detectar que el usuario es null y actualizará el estado por ti.
   } catch (error) {
     console.error("Error en logout:", error);
   }

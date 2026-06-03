@@ -1,30 +1,60 @@
-import { View, Text, Image } from 'react-native';
+import { View, Text, Image, ActivityIndicator } from 'react-native';
 import BudgetComp from './BudgetComp';
+import { useUserProfile, useSportCenter } from '../hooks/index';
 import { cardHeaderStyles } from '../styles/components/cardHeader';
+import { colors } from '../styles/constants/colors';
+
 
 export default function CardHeaderComp() {
+
+  const { userProfile, loading: userLoading, error: userError } = useUserProfile();
+
+  const {
+    sportCenter,
+    loading: centerLoading,
+    error: centerError,
+  } = useSportCenter(userProfile?.sportCenterId || null);
+
+  const isLoading = userLoading || centerLoading;
+  const hasError = userError || centerError;
+
+  if (isLoading) {
+    return (
+      <View style={cardHeaderStyles.cardContainer}>
+        <ActivityIndicator size="large" color={colors.primary} />
+      </View>
+    );
+  }
+  if (hasError) {
+    return (
+      <View style={cardHeaderStyles.cardContainer}>
+        <Text style={{ color: colors.error }}>Error: {hasError}</Text>
+      </View>
+    );
+  }
+
   return (
     <View style={cardHeaderStyles.cardContainer}>
       <Text style={cardHeaderStyles.title}>
-        Bienvenido Jorge
+        Bienvenido {userProfile?.firstName || 'Usuario'}
       </Text>
       <View style={cardHeaderStyles.rowContainer}>
         <Image
-            source={{
-              uri: 'https://previews.123rf.com/images/serkorkin/serkorkin1404/serkorkin140400025/27449159-man-logo-sign-for-sport-club-health-center-music-festival-etc.avif',
-            }}
-            style={{
-              width: 60,
-              height: 60,
-              borderRadius: 30,
-            }}
-          />
+          source={{
+            uri: sportCenter?.image,
+          }}
+          style={{
+            width: 60,
+            height: 60,
+            borderRadius: 30,
+          }}
+        />
         <View style={cardHeaderStyles.maincolum}>
           <Text style={cardHeaderStyles.title}>
-            Fitnes park
+            {sportCenter?.name || 'Centro Deportivo'}
           </Text>
           <Text style={cardHeaderStyles.subtitle}>
-            12 class  368 Alumnos
+            {sportCenter?.students || 0} Alumnos
           </Text>
         </View>
         <BudgetComp
