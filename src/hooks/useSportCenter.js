@@ -10,7 +10,6 @@ export function useSportCenter(sportCenterId) {
 
   useEffect(() => {
     if (!sportCenterId) {
-      console.log('No sportCenterId, returning');
       setSportCenter(null);
       setLoading(false);
       return;

@@ -26,9 +26,9 @@ export const typography = {
     fontFamily,
   },
   body: {
-    fontSize: 16,
+    fontSize: 14,
     fontWeight: '400',
-    lineHeight: 24,
+    lineHeight: 22,
     fontFamily,
   },
   caption: {

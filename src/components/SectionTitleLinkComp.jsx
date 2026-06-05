@@ -16,6 +16,7 @@ export default function SectionTitleLinkComp({
         <Text style={sectionTitleLinkStyles.textTitle}>
           {title}
         </Text>
+        {linkText && linkText.trim() !== '' && (
         <TouchableOpacity
           onPress={onLink}
           activeOpacity={0.6}
@@ -33,6 +34,7 @@ export default function SectionTitleLinkComp({
             />
           </View>
         </TouchableOpacity>
+        )}
       </View>
       <View style={sectionTitleLinkStyles.bodyContainer}>{children}</View>
     </View>

@@ -30,7 +30,7 @@ function TabNavigator() {
           ),
           tabBarLabel: 'Inicio',
           tabBarLabelStyle: ({ focused }) => ({
-            color: focused ? colors.primary : olors.textPrimary,
+            color: focused ? colors.primary : colors.textPrimary,
           }),
           headerShown: false,
         }}

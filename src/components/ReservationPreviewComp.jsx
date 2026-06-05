@@ -24,7 +24,7 @@ export default function ReservationPreviewComp({
       <Text style={reservationPreviewStyles.textPrimary}>
         {time}
       </Text>
-      <Text style={reservationPreviewStyles.textPrimary, {flex:3, textAlign:'center'}}>
+      <Text style={[reservationPreviewStyles.textPrimary, { flex: 3, textAlign: 'center' }]}>
         {name}
       </Text>
       <Text style={reservationPreviewStyles.textSecndary}>

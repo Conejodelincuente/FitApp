@@ -13,10 +13,15 @@ export function useLoadUserData(user) {
 
     const loadUserData = async () => {
       try {
-        const userDocRef = doc(db, 'users', user.uid, 'profile', 'data');
+        const userDocRef = doc(db, 'users', user.uid);
         const userDocSnap = await getDoc(userDocRef);
         if (userDocSnap.exists()) {
           setUserData(userDocSnap.data());
+        } else {
+          console.log(
+            'No existe el documento para el UID:',
+            user.uid
+          );
         }
       } catch (error) {
         console.error('Error cargando datos del usuario:', error);
