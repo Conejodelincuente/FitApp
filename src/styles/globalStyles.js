@@ -13,6 +13,12 @@ export const globalStyles = StyleSheet.create({
     justifyContent: 'center',
     padding: spacing.sm
   },
+  gridRow : {
+    flexDirection:'row',
+    padding: spacing.sm,
+    gap: spacing.sm,
+    width: '100%',
+  },
   containerGeneral : {
     padding: spacing.mm,
     margin: spacing.mm,

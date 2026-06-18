@@ -1,13 +1,13 @@
 import {
   View,
-  FlatList,
-  Image,
   Text,
   TouchableOpacity,
   Animated,
 } from 'react-native';
-import { useContext, useState, useRef } from 'react';
+import { useContext, useState, useRef, memo } from 'react';
 import { AuthContext } from '../context/AuthContext';
+import { useGlobalModal } from '../context/ModalContext';
+import { toggleClassReservation } from '../services/firestoreService';
 import { Ionicons } from '@expo/vector-icons';
 import {
   enrollInClass,
@@ -16,8 +16,10 @@ import {
 import { classListCompStyles } from '../styles/components/classListComp';
 import { colors } from '../styles/constants';
 
-export default function ClassListComp({ item }) {
+
+function ClassListComp({ item, navigation }) {
   const { user } = useContext(AuthContext);
+  const { showConfirmModal } = useGlobalModal();
   const [isProcessing, setIsProcessing] = useState(false);
   const [alertVisible, setAlertVisible] = useState(false);
   const fadeAnim = useRef(new Animated.Value(0)).current;
@@ -56,28 +58,36 @@ export default function ClassListComp({ item }) {
     });
   };
 
-  // Manejador del Click limpio
+  // Manejador del boton de cancelacion
   const handleToggleReservation = async () => {
     if (isProcessing || !user) return;
-    setIsProcessing(true);
+
+    const actionData = {
+      classId: item.id,
+      userId: user.uid,
+      isEnrolled: isEnrolled,
+      availableSpots: availableSpots,
+    };
 
     try {
       if (isEnrolled) {
-        // Ejecuta tu servicio de cancelación
-        await cancelReservation(item.id, user.uid);
+        showConfirmModal(
+        async () => { await toggleClassReservation(actionData); },
+        "¿Quieres eliminar la reserva?",
+        `Vas a cancelar tu reserva en ${item.name}`
+      );
       } else {
+        setIsProcessing(true);
         if (availableSpots <= 0) {
           alert('¡Vaya! Esta clase se ha llenado.');
           setIsProcessing(false);
           return;
         }
-        // Ejecuta tu servicio de inscripción
-        await enrollInClass(item.id, user.uid);
-        triggerAlert();
+        await toggleClassReservation(actionData);
       }
     } catch (error) {
-      console.error("Error en la vista al gestionar reserva:", error);
-      alert('Ocurrió un error. Inténtalo de nuevo.');
+      console.error('Error en la vista al gestionar reserva:', error);
+      alert('Ocurrió un pequeño error. Inténtalo de nuevo.');
     } finally {
       setIsProcessing(false);
     }
@@ -87,6 +97,9 @@ export default function ClassListComp({ item }) {
     <TouchableOpacity
       activeOpacity={0.8}
       style={classListCompStyles.cardWrapper}
+      onPress={() =>
+        navigation && navigation.navigate('DetailClass', { item })
+      }
     >
       <View
         style={[
@@ -161,3 +174,25 @@ export default function ClassListComp({ item }) {
     </TouchableOpacity>
   );
 }
+
+export default memo(ClassListComp, (prevProps, nextProps) => {
+  const prev = prevProps.item || {};
+  const next = nextProps.item || {};
+
+  const prevStudents = Array.isArray(prev.students)
+    ? prev.students
+    : [];
+  const nextStudents = Array.isArray(next.students)
+    ? next.students
+    : [];
+
+  return (
+    prev.id === next.id &&
+    prev.name === next.name &&
+    prev.instructor === next.instructor &&
+    prev.time === next.time &&
+    prev.date === next.date &&
+    prev.capacity === next.capacity &&
+    prevStudents.length === nextStudents.length
+  );
+});

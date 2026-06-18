@@ -13,17 +13,24 @@ export const reservationPreviewStyles = StyleSheet.create({
     paddingHorizontal: spacing.mm,
     borderRadius: 8,
   },
-  textPrimary: {
-    fontSize: typography.h4.fontSize,
-    fontWeight: '400',
+  textTitle: {
+    textAlign: 'start',
+    fontSize: typography.h3.fontSize,
+    fontWeight: '500',
     textAlign: 'start',
     color: colors.textPrimary,
   },
   textSecndary: {
     fontSize: typography.h4.fontSize,
-    fontWeight: 200,
+    fontWeight: 400,
     textAlign: 'start',
-    color: colors.textDisabled,
+    color: colors.textPrimary,
     marginLeft: spacing.md,
+  },
+  dateColumn: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    minWidth: 55,
+    paddingHorizontal: spacing.xxs,
   },
 });

@@ -8,7 +8,7 @@ export const colors = {
   backgroundDark: '#0f0f0f',
   surface: '#222222',
   surfaceSecondary: '#dbdbdb',
-  surfaceTrans:'#dbdbdb34',
+  surfaceTrans:'#282828bb',
 
   // Texto
   textPrimary: '#151515',
